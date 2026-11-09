@@ -104,6 +104,7 @@ object PhoenixLaunch {
             }
         }
         PhoenixHomeButton.attach(activity)
+        PhoenixTunnel.declare(activity, request)
 
         retryJob?.cancel()
         retryJob = null

@@ -31,6 +31,26 @@ class PhoenixLaunchTest {
         assertFalse(TcpRetryPolicy.shouldAttempt(TcpRetryPolicy.Phase.BUSY))
     }
 
+    @Test fun loopbackTcpLaunchDeclaresTunnel() {
+        val declared = PhoenixTunnel.endpointFor(PhoenixLaunch.Request.Tcp("127.0.0.1", 5277))
+        assertEquals("127.0.0.1:5277", declared)
+        assertTrue(PhoenixTunnel.matches(declared, "127.0.0.1", 5277))
+        assertEquals("localhost:5277", PhoenixTunnel.endpointFor(PhoenixLaunch.Request.Tcp("LocalHost", 5277)))
+    }
+
+    @Test fun tunnelMatchesOnlyTheDeclaredEndpoint() {
+        val declared = PhoenixTunnel.endpointFor(PhoenixLaunch.Request.Tcp("127.0.0.1", 5277))
+        assertFalse(PhoenixTunnel.matches(declared, "127.0.0.1", 5288))
+        assertFalse(PhoenixTunnel.matches(declared, "127.0.0.2", 5277))
+        assertFalse(PhoenixTunnel.matches(null, "127.0.0.1", 5277))
+    }
+
+    @Test fun networkAndUsbLaunchesDeclareNoTunnel() {
+        assertNull(PhoenixTunnel.endpointFor(PhoenixLaunch.Request.Tcp("10.0.2.2", 5277)))
+        assertNull(PhoenixTunnel.endpointFor(PhoenixLaunch.Request.Tcp("192.168.1.20", 5277)))
+        assertNull(PhoenixTunnel.endpointFor(PhoenixLaunch.Request.Usb))
+    }
+
     @Test fun audioGateMapping() {
         assertEquals(false, PhoenixAudioGate.readyFrom(PhoenixAudioGate.ACTION_AUDIO_PATH, true, false))
         assertEquals(true, PhoenixAudioGate.readyFrom(PhoenixAudioGate.ACTION_AUDIO_PATH, true, true))

@@ -66,7 +66,8 @@ class SocketProjectionConnection(
     // Nearby exposes a synthetic loopback address for a remote phone. Retain the route on
     // this connection object so a later attempted endpoint cannot change session ownership.
     internal val isLoopbackPeer: Boolean
-        get() = !singleMessage && !LoopbackBindPolicy.needsNetworkBinding(ip)
+        get() = !singleMessage && !LoopbackBindPolicy.needsNetworkBinding(ip) &&
+            !com.andrerinas.openheadunit.phoenix.PhoenixTunnel.isTunnel(context, ip, port)
 
     override val isSingleMessage: Boolean
         get() = singleMessage
