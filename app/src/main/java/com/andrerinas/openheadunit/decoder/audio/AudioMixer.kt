@@ -486,6 +486,7 @@ class AudioMixer(
             }
             cycleChannels.forEach { it.writePending = true }
             renderCycle(now, renderBurst, cycleChannels)
+            if (com.andrerinas.openheadunit.phoenix.PhoenixAudioGate.held) outputBuffer.fill(0)
             for ((id, state) in channels) {
                 if (state.activeThisCycle && !state.startupReported && state.firstPcmMs >= 0) {
                     state.startupReported = true

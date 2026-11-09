@@ -47,6 +47,7 @@ class App : Application(), Application.ActivityLifecycleCallbacks {
         super.onCreate()
         instance = this
         registerActivityLifecycleCallbacks(this)
+        com.andrerinas.openheadunit.phoenix.PhoenixAudioGate.register(this)
 
         try {
             val packageReceiver = object : BroadcastReceiver() {

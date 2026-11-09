@@ -1180,6 +1180,7 @@ class MainActivity : BaseActivity() {
 
     private fun handleLaunchIntent(intent: Intent?) {
         if (intent == null) return
+        if (!com.andrerinas.openheadunit.phoenix.PhoenixLaunch.handle(this, intent)) com.andrerinas.openheadunit.phoenix.PhoenixHomeButton.attach(this)
 
         if (intent.getBooleanExtra(EXTRA_SHOW_DRIVER_SELECTOR, false)) {
             AppLog.i("MainActivity: EXTRA_SHOW_DRIVER_SELECTOR received")

@@ -1298,6 +1298,7 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
         commManager.dimState.resumeAfterOverlay()
         overlayView.requestFocus()
         setFullscreen() // Call setFullscreen here as well
+        com.andrerinas.openheadunit.phoenix.PhoenixHomeButton.attach(this)
 
         val loadingOverlay = findViewById<View>(R.id.loading_overlay)
         if (settings.hudMirroring) {

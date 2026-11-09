@@ -308,6 +308,15 @@
              an activity because Tasker and MacroDroid can send to one without holding "Display
              over other apps", which an activity target needs on Android 10+. The configuring
              actions are refused unless the user turns on "Allow external configuration". -->
+        <!-- Phoenix launcher audio-path readiness (see docs/PHOENIX-CHANGES.md). -->
+        <receiver
+            android:name=".phoenix.PhoenixAudioGate$Receiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.phoenix.launcher.action.AUDIO_PATH" />
+            </intent-filter>
+        </receiver>
+
         <receiver
             android:name=".automation.AutomationReceiver"
             android:exported="true">
